@@ -3,226 +3,268 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INFOTECH :: Gestão de Projetos</title>
+<title>INFOTECH :: Projeto Integrador 2025</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg0: #080c10;
-    --bg1: #0d1117;
-    --bg2: #111820;
-    --bg3: #161e28;
-    --border: rgba(0,230,180,.12);
-    --border2: rgba(0,230,180,.22);
-    --accent: #00e6b4;
-    --accent2: #00b4ff;
-    --accent3: #a78bfa;
-    --warn: #f59e0b;
-    --danger: #f43f5e;
-    --text: #c9d6e3;
-    --text2: #7a91a8;
-    --text3: #3d5166;
-    --mono: 'JetBrains Mono', monospace;
-    --sans: 'Syne', sans-serif;
-    --r: 8px;
+    --bg0:#080c10;--bg1:#0d1117;--bg2:#111820;--bg3:#161e28;
+    --border:rgba(0,230,180,.12);--border2:rgba(0,230,180,.22);
+    --accent:#00e6b4;--accent2:#00b4ff;--accent3:#a78bfa;
+    --warn:#f59e0b;--danger:#f43f5e;--text:#c9d6e3;
+    --text2:#7a91a8;--text3:#3d5166;
+    --mono:"JetBrains Mono",monospace;--sans:"Syne",sans-serif;--r:8px;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg0); color: var(--text); font-family: var(--mono);
-    font-size: 13px; line-height: 1.7; min-height: 100vh;
-    background-image: linear-gradient(rgba(0,230,180,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,230,180,.025) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg0); }
-  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-  .shell { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg0);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.7;min-height:100vh;background-image:linear-gradient(rgba(0,230,180,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,230,180,.025) 1px,transparent 1px);background-size:40px 40px;}
+  ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--bg0);}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
 
-  .topbar {
-    display: flex; align-items: center; justify-content: space-between;
-    border: 1px solid var(--border2); border-radius: var(--r);
-    background: var(--bg1); padding: 14px 22px; margin-bottom: 28px;
-    position: relative; overflow: hidden;
-  }
-  .topbar::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background: linear-gradient(180deg, var(--accent), var(--accent2)); }
-  .topbar-logo { font-family: var(--sans); font-size: 22px; font-weight: 800; color: #fff; }
-  .topbar-logo span { color: var(--accent); }
-  .topbar-sub { font-size: 11px; color: var(--text2); letter-spacing: 1px; margin-top: 3px; }
-  .topbar-right { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .pill { font-size: 10px; font-weight: 700; letter-spacing: .8px; padding: 4px 10px; border-radius: 20px; border: 1px solid; text-transform: uppercase; }
-  .pill-green { border-color: var(--accent); color: var(--accent); background: rgba(0,230,180,.07); }
-  .pill-blue  { border-color: var(--accent2); color: var(--accent2); background: rgba(0,180,255,.07); }
+  /* NAV */
+  .nav{position:sticky;top:0;z-index:100;background:rgba(8,12,16,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border2);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:52px;}
+  .nav-logo{font-family:var(--sans);font-size:16px;font-weight:800;color:#fff;text-decoration:none;}
+  .nav-logo span{color:var(--accent);}
+  .nav-links{display:flex;gap:4px;}
+  .nav-link{font-size:10px;font-weight:700;letter-spacing:.6px;padding:6px 12px;border-radius:6px;text-decoration:none;text-transform:uppercase;border:1px solid transparent;transition:all .2s;color:var(--text2);}
+  .nav-link:hover{color:var(--accent);border-color:rgba(0,230,180,.25);background:rgba(0,230,180,.06);}
+  .nav-link.active{color:var(--accent);border-color:rgba(0,230,180,.3);background:rgba(0,230,180,.07);}
+  .nav-link.soon{color:var(--text3);cursor:default;}
+  .nav-link.soon:hover{color:var(--text3);border-color:transparent;background:transparent;}
 
-  /* Team strip */
-  .team-strip {
-    padding: 16px 20px; margin-bottom: 20px;
-    background: var(--bg1); border: 1px solid var(--border); border-radius: var(--r);
-  }
-  .team-strip-title { font-size: 10px; font-weight: 700; letter-spacing: .8px; color: var(--text3); text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-  .team-strip-title::after { content:''; flex:1; height:1px; background: var(--border); }
-  .team-areas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .team-area { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 12px 14px; }
-  .area-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-  .area-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .dot-g { background: var(--accent); }
-  .dot-s { background: #f87171; }
-  .dot-p { background: var(--accent3); }
-  .dot-d { background: var(--accent2); }
-  .area-title { font-size: 10px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; }
-  .at-g { color: var(--accent); }
-  .at-s { color: #f87171; }
-  .at-p { color: var(--accent3); }
-  .at-d { color: var(--accent2); }
-  .area-members { display: flex; flex-direction: column; gap: 4px; }
-  .member-tag { font-size: 11px; color: var(--text2); padding: 3px 0; border-bottom: 1px solid var(--border); line-height: 1.3; }
-  .member-tag:last-child { border-bottom: none; }
+  /* SHELL */
+  .shell{max-width:1100px;margin:0 auto;padding:40px 24px 80px;}
+  .section-block{margin-bottom:80px;}
+  .section-divider{border:none;border-top:1px solid var(--border2);margin:60px 0;position:relative;}
+  .section-divider::after{content:"";position:absolute;left:50%;top:-1px;transform:translateX(-50%);width:60px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
 
-  /* Section header */
-  .sec-head { display: flex; align-items: flex-start; gap: 14px; padding: 18px 22px; margin-bottom: 16px; background: var(--bg1); border: 1px solid var(--border); border-radius: var(--r); }
-  .sec-num { font-family: var(--sans); font-size: 38px; font-weight: 800; color: var(--accent); opacity: .18; line-height: 1; min-width: 44px; }
-  .sec-text h2 { font-family: var(--sans); font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 3px; }
-  .sec-text p  { font-size: 11.5px; color: var(--text2); }
+  /* TOPBAR */
+  .topbar{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg1);padding:14px 22px;margin-bottom:28px;position:relative;overflow:hidden;}
+  .topbar::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--accent),var(--accent2));}
+  .topbar-logo{font-family:var(--sans);font-size:22px;font-weight:800;color:#fff;}
+  .topbar-logo span{color:var(--accent);}
+  .topbar-sub{font-size:11px;color:var(--text2);letter-spacing:1px;margin-top:3px;}
+  .topbar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .pill{font-size:10px;font-weight:700;letter-spacing:.8px;padding:4px 10px;border-radius:20px;border:1px solid;text-transform:uppercase;}
+  .pill-green{border-color:var(--accent);color:var(--accent);background:rgba(0,230,180,.07);}
+  .pill-blue{border-color:var(--accent2);color:var(--accent2);background:rgba(0,180,255,.07);}
+  .pill-red{border-color:var(--danger);color:var(--danger);background:rgba(244,63,94,.07);}
 
-  .card { background: var(--bg1); border: 1px solid var(--border); border-radius: var(--r); padding: 22px 24px; margin-bottom: 14px; }
-  .card-accent-t { border-top: 2px solid var(--accent); }
-  .card-accent-b { border-top: 2px solid var(--accent2); }
-  .card-accent-p { border-top: 2px solid var(--accent3); }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-  .card { animation: fadeUp .4s ease both; }
-  .card:nth-child(2){animation-delay:.05s} .card:nth-child(3){animation-delay:.1s} .card:nth-child(4){animation-delay:.15s}
+  /* TEAM */
+  .team-strip{padding:16px 20px;margin-bottom:20px;background:var(--bg1);border:1px solid var(--border);border-radius:var(--r);}
+  .team-strip-title{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--text3);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .team-strip-title::after{content:"";flex:1;height:1px;background:var(--border);}
+  .team-areas{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .team-area{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;}
+  .area-header{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
+  .area-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .dot-g{background:var(--accent);}.dot-s{background:#f87171;}.dot-p{background:var(--accent3);}.dot-d{background:var(--accent2);}
+  .area-title{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;}
+  .at-g{color:var(--accent);}.at-s{color:#f87171;}.at-p{color:var(--accent3);}.at-d{color:var(--accent2);}
+  .area-members{display:flex;flex-direction:column;gap:4px;}
+  .member-tag{font-size:11px;color:var(--text2);padding:3px 0;border-bottom:1px solid var(--border);line-height:1.3;}
+  .member-tag:last-child{border-bottom:none;}
 
-  .tag { display:inline-flex; align-items:center; gap:5px; font-size:10px; font-weight:700; letter-spacing:.8px; color:var(--accent); border:1px solid rgba(0,230,180,.3); padding:3px 9px; border-radius:4px; margin-bottom:16px; text-transform:uppercase; background:rgba(0,230,180,.06); }
-  .tag::before { content:'//'; opacity:.5; }
-  .tag-blue   { color:var(--accent2); border-color:rgba(0,180,255,.3);   background:rgba(0,180,255,.06); }
-  .tag-purple { color:var(--accent3); border-color:rgba(167,139,250,.3); background:rgba(167,139,250,.06); }
+  /* SEC HEAD */
+  .sec-head{display:flex;align-items:flex-start;gap:14px;padding:18px 22px;margin-bottom:16px;background:var(--bg1);border:1px solid var(--border);border-radius:var(--r);}
+  .sec-num{font-family:var(--sans);font-size:38px;font-weight:800;color:var(--accent);opacity:.18;line-height:1;min-width:44px;}
+  .sec-num-red{color:#f87171!important;}
+  .sec-text h2{font-family:var(--sans);font-size:18px;font-weight:800;color:#fff;margin-bottom:3px;}
+  .sec-text p{font-size:11.5px;color:var(--text2);}
 
-  .charter-field { display:flex; gap:10px; margin-bottom:12px; align-items:flex-start; }
-  .field-key { font-size:10px; font-weight:700; letter-spacing:.6px; color:var(--accent); background:rgba(0,230,180,.08); border:1px solid rgba(0,230,180,.2); padding:3px 8px; border-radius:4px; white-space:nowrap; margin-top:1px; }
-  .field-val { color:var(--text); font-size:12.5px; line-height:1.65; }
-  ul.smart-list { list-style:none; padding:0; margin-top:6px; }
-  ul.smart-list li { padding:7px 10px 7px 28px; margin-bottom:5px; background:var(--bg3); border-left:2px solid var(--accent); border-radius:0 4px 4px 0; position:relative; color:var(--text); font-size:12px; }
-  ul.smart-list li::before { content:'▸'; position:absolute; left:9px; color:var(--accent); font-size:10px; top:9px; }
+  /* CARDS */
+  .card{background:var(--bg1);border:1px solid var(--border);border-radius:var(--r);padding:22px 24px;margin-bottom:14px;}
+  .card-accent-t{border-top:2px solid var(--accent);}
+  .card-accent-b{border-top:2px solid var(--accent2);}
+  .card-accent-p{border-top:2px solid var(--accent3);}
+  .card-red{border-top:2px solid var(--danger);}
+  .card-warn{border-top:2px solid var(--warn);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .card{animation:fadeUp .4s ease both;}
 
-  /* RACI */
-  .tbl-wrap { overflow-x:auto; border-radius:var(--r); border:1px solid var(--border); margin-top:8px; }
-  table { width:100%; border-collapse:collapse; min-width:680px; }
-  thead tr { background:var(--bg3); }
-  thead th { padding:10px 12px; text-align:center; font-size:10px; font-weight:700; letter-spacing:.6px; color:var(--text2); text-transform:uppercase; border-bottom:1px solid var(--border2); border-right:1px solid var(--border); vertical-align:top; }
-  thead th:first-child { text-align:left; border-left:none; }
-  thead th:last-child  { border-right:none; }
-  .th-gestao { color:var(--accent)  !important; }
-  .th-seg    { color:#f87171        !important; }
-  .th-po     { color:var(--accent3) !important; }
-  .th-dados  { color:var(--accent2) !important; }
-  .th-names  { font-size:9px; font-weight:400; opacity:.65; margin-top:3px; line-height:1.4; }
-  tbody tr { border-bottom:1px solid var(--border); transition:background .15s; }
-  tbody tr:hover { background:rgba(0,230,180,.03); }
-  tbody tr:last-child { border-bottom:none; }
-  tbody td { padding:10px 12px; font-size:12px; color:var(--text); text-align:center; border-right:1px solid var(--border); }
-  tbody td:first-child { text-align:left; border-left:none; }
-  tbody td:last-child  { border-right:none; }
-  .td-group { padding:7px 12px; font-size:10px; font-weight:700; letter-spacing:.8px; color:var(--accent2); background:rgba(0,180,255,.05); text-transform:uppercase; text-align:left !important; border-bottom:1px solid var(--border); }
-  .raci-R { color:var(--accent); font-weight:700; font-size:15px; }
-  .raci-A { color:var(--warn);   font-weight:700; font-size:15px; }
-  .raci-C { color:var(--text2);  font-size:13px; }
-  .raci-I { color:var(--text3);  font-size:13px; }
-  .legend { font-size:11px; color:var(--text3); margin-top:8px; }
-  .legend span { color:var(--text2); margin-right:14px; }
+  /* TAGS */
+  .tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:.8px;padding:3px 9px;border-radius:4px;margin-bottom:16px;text-transform:uppercase;}
+  .tag::before{content:"//";opacity:.5;}
+  .tag-green{color:var(--accent);border:1px solid rgba(0,230,180,.3);background:rgba(0,230,180,.06);}
+  .tag-blue{color:var(--accent2);border:1px solid rgba(0,180,255,.3);background:rgba(0,180,255,.06);}
+  .tag-purple{color:var(--accent3);border:1px solid rgba(167,139,250,.3);background:rgba(167,139,250,.06);}
+  .tag-warn{color:var(--warn);border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.06);}
+  .tag-red{color:#f87171;border:1px solid rgba(244,63,94,.3);background:rgba(244,63,94,.06);}
 
-  /* Gantt */
-  .gantt-table { width:100%; border-collapse:collapse; min-width:700px; }
-  .gantt-table thead tr { background:var(--bg3); }
-  .gantt-table thead th { padding:9px 8px; font-size:10px; font-weight:700; letter-spacing:.6px; color:var(--text2); text-transform:uppercase; border-bottom:1px solid var(--border2); border-right:1px solid var(--border); text-align:center; }
-  .gantt-table thead th:first-child { text-align:left; padding-left:14px; width:28%; border-left:none; }
-  .gantt-table thead th:last-child  { border-right:none; }
-  .gantt-table tbody tr { border-bottom:1px solid var(--border); }
-  .gantt-table tbody tr:last-child { border-bottom:none; }
-  .gantt-table tbody td { padding:8px; vertical-align:middle; border-right:1px solid var(--border); }
-  .gantt-table tbody td:first-child { padding-left:14px; font-size:12px; color:var(--text); border-left:none; text-align:left; }
-  .gantt-table tbody td:last-child  { border-right:none; }
-  .gantt-bar { height:22px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; }
-  .g-done  { background:rgba(0,230,180,.15);  border:1px solid rgba(0,230,180,.4);  color:var(--accent); }
-  .g-ok    { background:rgba(0,230,180,.08);  border:1px solid rgba(0,230,180,.25); color:var(--accent); }
-  .g-prog  { background:rgba(0,180,255,.12);  border:1px solid rgba(0,180,255,.35); color:var(--accent2); }
-  .g-pend  { background:rgba(245,158,11,.10); border:1px solid rgba(245,158,11,.3);  color:var(--warn); }
-  .g-future{ background:rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.3); color:var(--accent3); }
+  /* CHARTER */
+  .charter-field{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;}
+  .field-key{font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--accent);background:rgba(0,230,180,.08);border:1px solid rgba(0,230,180,.2);padding:3px 8px;border-radius:4px;white-space:nowrap;margin-top:1px;}
+  .field-val{color:var(--text);font-size:12.5px;line-height:1.65;}
+  ul.smart-list{list-style:none;padding:0;margin-top:6px;}
+  ul.smart-list li{padding:7px 10px 7px 28px;margin-bottom:5px;background:var(--bg3);border-left:2px solid var(--accent);border-radius:0 4px 4px 0;position:relative;color:var(--text);font-size:12px;}
+  ul.smart-list li::before{content:"▸";position:absolute;left:9px;color:var(--accent);font-size:10px;top:9px;}
 
-  .resp-tag { font-size:9.5px; color:var(--text3); margin-top:4px; display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
-  .resp-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+  /* TABLES */
+  .tbl-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border);margin-top:8px;}
+  table{width:100%;border-collapse:collapse;min-width:680px;}
+  thead tr{background:var(--bg3);}
+  thead th{padding:10px 12px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--text2);text-transform:uppercase;border-bottom:1px solid var(--border2);border-right:1px solid var(--border);vertical-align:top;}
+  thead th:first-child{text-align:left;border-left:none;}
+  thead th:last-child{border-right:none;}
+  .th-gestao{color:var(--accent)!important;}.th-seg{color:#f87171!important;}.th-po{color:var(--accent3)!important;}.th-dados{color:var(--accent2)!important;}
+  .th-names{font-size:9px;font-weight:400;opacity:.65;margin-top:3px;line-height:1.4;}
+  tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
+  tbody tr:hover{background:rgba(0,230,180,.03);}
+  tbody tr:last-child{border-bottom:none;}
+  tbody td{padding:10px 12px;font-size:12px;color:var(--text);text-align:center;border-right:1px solid var(--border);}
+  tbody td:first-child{text-align:left;border-left:none;}
+  tbody td:last-child{border-right:none;}
+  .td-group{padding:7px 12px;font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent2);background:rgba(0,180,255,.05);text-transform:uppercase;text-align:left!important;border-bottom:1px solid var(--border);}
+  .raci-R{color:var(--accent);font-weight:700;font-size:15px;}.raci-A{color:var(--warn);font-weight:700;font-size:15px;}.raci-C{color:var(--text2);font-size:13px;}.raci-I{color:var(--text3);font-size:13px;}
+  .legend{font-size:11px;color:var(--text3);margin-top:8px;}
+  .legend span{color:var(--text2);margin-right:14px;}
 
-  .cost-total-row td { color:var(--accent) !important; font-weight:700; }
+  /* GANTT */
+  .gantt-table{width:100%;border-collapse:collapse;min-width:700px;}
+  .gantt-table thead tr{background:var(--bg3);}
+  .gantt-table thead th{padding:9px 8px;font-size:10px;font-weight:700;letter-spacing:.6px;color:var(--text2);text-transform:uppercase;border-bottom:1px solid var(--border2);border-right:1px solid var(--border);text-align:center;}
+  .gantt-table thead th:first-child{text-align:left;padding-left:14px;width:28%;border-left:none;}
+  .gantt-table thead th:last-child{border-right:none;}
+  .gantt-table tbody tr{border-bottom:1px solid var(--border);}
+  .gantt-table tbody tr:last-child{border-bottom:none;}
+  .gantt-table tbody td{padding:8px;vertical-align:middle;border-right:1px solid var(--border);}
+  .gantt-table tbody td:first-child{padding-left:14px;font-size:12px;color:var(--text);border-left:none;text-align:left;}
+  .gantt-table tbody td:last-child{border-right:none;}
+  .gantt-bar{height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+  .g-done{background:rgba(0,230,180,.15);border:1px solid rgba(0,230,180,.4);color:var(--accent);}
+  .g-ok{background:rgba(0,230,180,.08);border:1px solid rgba(0,230,180,.25);color:var(--accent);}
+  .g-prog{background:rgba(0,180,255,.12);border:1px solid rgba(0,180,255,.35);color:var(--accent2);}
+  .g-pend{background:rgba(245,158,11,.10);border:1px solid rgba(245,158,11,.3);color:var(--warn);}
+  .g-future{background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);color:var(--accent3);}
+  .resp-tag{font-size:9.5px;color:var(--text3);margin-top:4px;display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+  .resp-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+  .cost-total-row td{color:var(--accent)!important;font-weight:700;}
 
-  /* Risk */
-  .risk-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
-  .risk-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:14px 16px; position:relative; overflow:hidden; }
-  .risk-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; }
-  .risk-card.risk-alto::before { background:var(--danger); }
-  .risk-card.risk-med::before  { background:var(--warn); }
-  .risk-card.risk-baixo::before{ background:var(--accent); }
-  .risk-num { font-size:10px; color:var(--text3); margin-bottom:5px; }
-  .risk-title-text { font-size:12.5px; font-weight:700; color:#fff; margin-bottom:7px; line-height:1.4; }
-  .badge-row { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:8px; }
-  .badge { font-size:9px; font-weight:700; letter-spacing:.6px; padding:2px 7px; border-radius:3px; text-transform:uppercase; }
-  .b-red   { background:rgba(244,63,94,.15);  color:var(--danger); border:1px solid rgba(244,63,94,.3); }
-  .b-warn  { background:rgba(245,158,11,.12); color:var(--warn);   border:1px solid rgba(245,158,11,.3); }
-  .b-green { background:rgba(0,230,180,.1);   color:var(--accent);  border:1px solid rgba(0,230,180,.3); }
-  .risk-mit { font-size:11.5px; color:var(--text2); line-height:1.5; }
-  .risk-mit strong { color:var(--warn); }
+  /* RISK */
+  .risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+  .risk-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;position:relative;overflow:hidden;}
+  .risk-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;}
+  .risk-card.risk-alto::before{background:var(--danger);}.risk-card.risk-med::before{background:var(--warn);}.risk-card.risk-baixo::before{background:var(--accent);}
+  .risk-num{font-size:10px;color:var(--text3);margin-bottom:5px;}
+  .risk-title-text{font-size:12.5px;font-weight:700;color:#fff;margin-bottom:7px;line-height:1.4;}
+  .badge-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
+  .badge{font-size:9px;font-weight:700;letter-spacing:.6px;padding:2px 7px;border-radius:3px;text-transform:uppercase;}
+  .b-red{background:rgba(244,63,94,.15);color:var(--danger);border:1px solid rgba(244,63,94,.3);}
+  .b-warn{background:rgba(245,158,11,.12);color:var(--warn);border:1px solid rgba(245,158,11,.3);}
+  .b-green{background:rgba(0,230,180,.1);color:var(--accent);border:1px solid rgba(0,230,180,.3);}
+  .risk-mit{font-size:11.5px;color:var(--text2);line-height:1.5;}
+  .risk-mit strong{color:var(--warn);}
 
-  /* Comm */
-  .comm-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
-  .comm-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:14px 16px; }
-  .comm-icon { font-size:11px; color:var(--accent2); margin-bottom:5px; }
-  .comm-title-text { font-size:12.5px; font-weight:700; color:#fff; margin-bottom:5px; }
-  .comm-desc { font-size:11.5px; color:var(--text2); line-height:1.5; }
+  /* COMM */
+  .comm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+  .comm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;}
+  .comm-icon{font-size:11px;color:var(--accent2);margin-bottom:5px;}
+  .comm-title-text{font-size:12.5px;font-weight:700;color:#fff;margin-bottom:5px;}
+  .comm-desc{font-size:11.5px;color:var(--text2);line-height:1.5;}
 
-  /* Backlog */
-  .backlog-wrap { margin-top:10px; border:1px solid var(--border); border-radius:var(--r); overflow:hidden; }
-  .bl-head { display:grid; grid-template-columns:72px 1fr 90px 90px; padding:9px 14px; background:var(--bg3); font-size:10px; font-weight:700; letter-spacing:.8px; color:var(--text2); text-transform:uppercase; border-bottom:1px solid var(--border2); }
-  .bl-row  { display:grid; grid-template-columns:72px 1fr 90px 90px; padding:10px 14px; align-items:center; border-bottom:1px solid var(--border); font-size:12px; transition:background .15s; }
-  .bl-row:last-child { border-bottom:none; }
-  .bl-row:hover { background:rgba(0,230,180,.03); }
-  .bl-id { font-size:10px; font-weight:700; color:var(--accent2); background:rgba(0,180,255,.1); border:1px solid rgba(0,180,255,.25); padding:2px 7px; border-radius:4px; display:inline-block; }
-  .bl-story { color:var(--text); padding-right:12px; line-height:1.5; }
-  .bl-sprint { color:var(--text2); font-size:11px; }
-  .p-alta  { color:var(--danger); font-weight:700; font-size:11px; }
-  .p-media { color:var(--warn);   font-weight:700; font-size:11px; }
-  .p-baixa { color:var(--accent); font-weight:700; font-size:11px; }
+  /* BACKLOG */
+  .backlog-wrap{margin-top:10px;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+  .bl-head{display:grid;grid-template-columns:72px 1fr 90px 90px;padding:9px 14px;background:var(--bg3);font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--text2);text-transform:uppercase;border-bottom:1px solid var(--border2);}
+  .bl-row{display:grid;grid-template-columns:72px 1fr 90px 90px;padding:10px 14px;align-items:center;border-bottom:1px solid var(--border);font-size:12px;transition:background .15s;}
+  .bl-row:last-child{border-bottom:none;}
+  .bl-row:hover{background:rgba(0,230,180,.03);}
+  .bl-id{font-size:10px;font-weight:700;color:var(--accent2);background:rgba(0,180,255,.1);border:1px solid rgba(0,180,255,.25);padding:2px 7px;border-radius:4px;display:inline-block;}
+  .bl-story{color:var(--text);padding-right:12px;line-height:1.5;}
+  .bl-sprint{color:var(--text2);font-size:11px;}
+  .p-alta{color:var(--danger);font-weight:700;font-size:11px;}.p-media{color:var(--warn);font-weight:700;font-size:11px;}.p-baixa{color:var(--accent);font-weight:700;font-size:11px;}
 
-  .analytic { margin-top:20px; padding:16px 20px; border:1px solid rgba(245,158,11,.3); border-left:3px solid var(--warn); background:rgba(245,158,11,.05); border-radius:0 var(--r) var(--r) 0; }
-  .analytic-head { font-size:10px; font-weight:700; letter-spacing:.8px; color:var(--warn); text-transform:uppercase; margin-bottom:7px; }
-  .analytic p { font-size:12px; color:rgba(245,158,11,.85); line-height:1.7; }
-  .analytic p strong { color:var(--warn); }
+  /* KPI */
+  .kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+  .kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;}
+  .kpi-val{font-family:var(--sans);font-size:28px;font-weight:800;line-height:1;margin-bottom:4px;}
+  .kpi-lbl{font-size:10px;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;}
+  .kpi-red{color:var(--danger);}.kpi-warn{color:var(--warn);}.kpi-green{color:var(--accent);}.kpi-purple{color:var(--accent3);}
 
-  .divider { border:none; border-top:1px solid var(--border); margin:20px 0; }
-  .sub-label { font-size:11px; font-weight:700; letter-spacing:.8px; color:var(--text2); text-transform:uppercase; margin-bottom:8px; }
+  /* GUT TABLE */
+  .td-id{font-size:10px;color:var(--text3);margin-bottom:2px;}
+  .td-name{font-weight:700;color:#fff;font-size:12.5px;margin-bottom:3px;}
+  .td-desc{font-size:11px;color:var(--text2);line-height:1.4;}
+  .score-val{font-family:var(--sans);font-size:18px;font-weight:800;}
+  .score-max{color:var(--danger);}.score-high{color:var(--warn);}.score-med{color:var(--accent3);}
+  .g-val{font-size:14px;font-weight:700;}
+  .g5{color:var(--danger);}.g4{color:var(--warn);}.g3{color:var(--accent3);}.g2{color:var(--accent2);}.g1{color:var(--accent);}
+  .prio-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:3px;text-transform:uppercase;white-space:nowrap;}
+  .prio-max{background:rgba(244,63,94,.15);color:var(--danger);border:1px solid rgba(244,63,94,.3);}
+  .prio-high{background:rgba(245,158,11,.12);color:var(--warn);border:1px solid rgba(245,158,11,.3);}
+  .prio-med{background:rgba(167,139,250,.1);color:var(--accent3);border:1px solid rgba(167,139,250,.3);}
+  .score-bar-wrap{width:100%;background:var(--bg3);border-radius:3px;height:4px;margin-top:4px;}
+  .score-bar{height:4px;border-radius:3px;}
 
-  @media (max-width:800px) {
-    .team-areas { grid-template-columns: 1fr 1fr; }
-    .risk-grid, .comm-grid { grid-template-columns:1fr; }
-    .bl-head, .bl-row { grid-template-columns:60px 1fr 70px; }
-    .bl-head>*:last-child,.bl-row>*:last-child { display:none; }
-  }
-  @media (max-width:480px) {
-    .team-areas { grid-template-columns: 1fr; }
+  /* CRITERIA */
+  .criteria-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;}
+  .criteria-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;}
+  .criteria-title{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px;}
+  .criteria-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--text2);}
+  .criteria-row:last-child{border-bottom:none;}
+  .criteria-score{font-weight:700;}
+
+  /* ACCESS & LGPD */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+  .info-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;}
+  .info-box-title{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:10px;}
+  .info-row{padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;line-height:1.5;}
+  .info-row:last-child{border-bottom:none;}
+  .info-row strong{color:#fff;display:block;margin-bottom:2px;font-size:11px;text-transform:uppercase;letter-spacing:.3px;}
+  .info-row span{color:var(--text2);}
+
+  /* ANALYTIC */
+  .analytic{margin-top:20px;padding:16px 20px;border:1px solid rgba(245,158,11,.3);border-left:3px solid var(--warn);background:rgba(245,158,11,.05);border-radius:0 var(--r) var(--r) 0;}
+  .analytic-head{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--warn);text-transform:uppercase;margin-bottom:7px;}
+  .analytic p{font-size:12px;color:rgba(245,158,11,.85);line-height:1.7;}
+  .analytic p strong{color:var(--warn);}
+
+  .divider{border:none;border-top:1px solid var(--border);margin:20px 0;}
+  .sub-label{font-size:11px;font-weight:700;letter-spacing:.8px;color:var(--text2);text-transform:uppercase;margin-bottom:8px;}
+
+  /* FOOTER */
+  .site-footer{text-align:center;padding:32px 24px;font-size:11px;color:var(--text3);border-top:1px solid var(--border);}
+  .site-footer span{color:var(--text2);}
+
+  @media(max-width:800px){
+    .team-areas{grid-template-columns:1fr 1fr;}
+    .risk-grid,.comm-grid,.two-col,.criteria-grid{grid-template-columns:1fr;}
+    .kpi-strip{grid-template-columns:1fr 1fr;}
+    .bl-head,.bl-row{grid-template-columns:60px 1fr 70px;}
+    .bl-head>*:last-child,.bl-row>*:last-child{display:none;}
+    .nav-links{gap:2px;}
+    .nav-link{padding:5px 8px;font-size:9px;}
   }
 </style>
 </head>
 <body>
-<div class="shell">
 
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <div>
-      <div class="topbar-logo">INFO<span>TECH</span></div>
-      <div class="topbar-sub">// GESTÃO INTELIGENTE DE BANCO DE DADOS &nbsp;·&nbsp; PROJETO INTEGRADOR 2025</div>
-    </div>
-    <div class="topbar-right">
-      <span class="pill pill-green">STATUS: ativo</span>
-      <span class="pill pill-blue">SEÇÃO 01 / 04</span>
-    </div>
+<!-- NAV FIXO -->
+<nav class="nav">
+  <a class="nav-logo" href="#top">INFO<span>TECH</span></a>
+  <div class="nav-links">
+    <a class="nav-link active" href="#gestao">01 Gestão</a>
+    <a class="nav-link active" href="#seguranca">03 Segurança</a>
+    <a class="nav-link soon" href="#">02 Análise</a>
+    <a class="nav-link soon" href="#">04 Pesq. Op.</a>
   </div>
+</nav>
 
-  <!-- TEAM STRIP -->
+<div class="shell" id="top">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  SEÇÃO 01 — GESTÃO DE PROJETOS            -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section-block" id="gestao">
+
+    <div class="topbar">
+      <div>
+        <div class="topbar-logo">INFO<span>TECH</span></div>
+        <div class="topbar-sub">// GESTÃO INTELIGENTE DE BANCO DE DADOS &nbsp;·&nbsp; PROJETO INTEGRADOR 2025</div>
+      </div>
+      <div class="topbar-right">
+        <span class="pill pill-green">STATUS: ativo</span>
+        <span class="pill pill-blue">SEÇÃO 01 / 04</span>
+      </div>
+    </div>
+
+<!-- TEAM STRIP -->
   <div class="team-strip">
     <div class="team-strip-title">// Equipe — 11 integrantes</div>
     <div class="team-areas">
@@ -505,6 +547,400 @@
     </div>
   </div>
 
+
+
+  </div><!-- /section gestao -->
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  SEÇÃO 03 — SEGURANÇA DA INFORMAÇÃO       -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section-block" id="seguranca">
+
+    <div class="topbar" style="--before-bg:linear-gradient(180deg,var(--danger),var(--warn));">
+      <div>
+        <div class="topbar-logo">INFO<span>TECH</span></div>
+        <div class="topbar-sub">// GESTÃO INTELIGENTE DE BANCO DE DADOS &nbsp;·&nbsp; PROJETO INTEGRADOR 2025</div>
+      </div>
+      <div class="topbar-right">
+        <span class="pill pill-red">SEGURANÇA</span>
+        <span class="pill pill-blue">SEÇÃO 03 / 04</span>
+      </div>
+    </div>
+
+    <div class="sec-head">
+      <div class="sec-num sec-num-red">03</div>
+      <div class="sec-text">
+        <h2>Segurança da Informação</h2>
+        <p>Mapeamento de ameaças com Matriz GUT, políticas de acesso e adequação à LGPD. &nbsp;·&nbsp; Responsáveis: Gabriel &amp; Kaio Felipe</p>
+      </div>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi-card"><div class="kpi-val kpi-red">11</div><div class="kpi-lbl">Prioridade Máxima</div></div>
+      <div class="kpi-card"><div class="kpi-val kpi-warn">5</div><div class="kpi-lbl">Prioridade Alta</div></div>
+      <div class="kpi-card"><div class="kpi-val kpi-purple">1</div><div class="kpi-lbl">Prioridade Média</div></div>
+      <div class="kpi-card"><div class="kpi-val kpi-green">20</div><div class="kpi-lbl">Total de Ameaças</div></div>
+    </div>
+
+<!-- SECTION HEADER -->
+  <div class="sec-head">
+    <div class="sec-num">03</div>
+    <div class="sec-text">
+      <h2>Segurança da Informação</h2>
+      <p>Mapeamento de ameaças com Matriz GUT, políticas de acesso e adequação à LGPD. &nbsp;·&nbsp; Responsáveis: Gabriel &amp; Kaio Felipe</p>
+    </div>
+  </div>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi-card">
+      <div class="kpi-val kpi-red">11</div>
+      <div class="kpi-lbl">Prioridade Máxima</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val kpi-warn">5</div>
+      <div class="kpi-lbl">Prioridade Alta</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val kpi-purple">1</div>
+      <div class="kpi-lbl">Prioridade Média</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val kpi-green">20</div>
+      <div class="kpi-lbl">Total de Ameaças</div>
+    </div>
+  </div>
+
+  <!-- 3.1 GUT MATRIX -->
+  <div class="card card-red">
+    <div class="tag tag-red">3.1 Ameaças &amp; Matriz GUT</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Problema / Vulnerabilidade</th>
+            <th>G</th><th>U</th><th>T</th>
+            <th>Score GxUxT</th>
+            <th>Prioridade</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- PRIORIDADE MÁXIMA -->
+          <tr>
+            <td>
+              <div class="td-id">ID 1.0</div>
+              <div class="td-name">Controle de Acesso Quebrado</div>
+              <div class="td-desc">Falhas que permitem acessos ou ações não autorizadas, explorando fraquezas na segurança.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">125</div><div class="score-bar-wrap"><div class="score-bar" style="width:100%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 2.0</div>
+              <div class="td-name">Falhas de Autenticação</div>
+              <div class="td-desc">Sistema aceita usuário inválido como legítimo por falhas no processo de autenticação.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">125</div><div class="score-bar-wrap"><div class="score-bar" style="width:100%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 3.0</div>
+              <div class="td-name">Falhas de Integridade de Software ou Dados</div>
+              <div class="td-desc">Dados ou códigos maliciosos são aceitos como confiáveis, comprometendo sistemas.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g4">4</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">100</div><div class="score-bar-wrap"><div class="score-bar" style="width:80%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 4.0</div>
+              <div class="td-name">Falhas no Registro e Alerta de Segurança</div>
+              <div class="td-desc">Sem monitoramento adequado, ataques não são detectados, dificultando respostas a incidentes.</div>
+            </td>
+            <td><span class="g-val g4">4</span></td><td><span class="g-val g4">4</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">80</div><div class="score-bar-wrap"><div class="score-bar" style="width:64%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 6.0</div>
+              <div class="td-name">Detecção de Erro sem Ação Corretiva</div>
+              <div class="td-desc">O produto detecta um erro específico, mas não toma providências para corrigi-lo.</div>
+            </td>
+            <td><span class="g-val g4">4</span></td><td><span class="g-val g4">4</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">80</div><div class="score-bar-wrap"><div class="score-bar" style="width:64%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 8.0</div>
+              <div class="td-name">Autorização Inadequada</div>
+              <div class="td-desc">O produto não realiza verificação de autorização ao acessar recursos ou executar ações.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">125</div><div class="score-bar-wrap"><div class="score-bar" style="width:100%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 10.0</div>
+              <div class="td-name">Preservação Inadequada de Permissões</div>
+              <div class="td-desc">Permissões são aplicadas incorretamente, ficando menos restritivas do que deveriam.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g4">4</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">100</div><div class="score-bar-wrap"><div class="score-bar" style="width:80%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 11.0</div>
+              <div class="td-name">Controle de Acesso Inadequado</div>
+              <div class="td-desc">O produto não restringe corretamente o acesso a recursos por agentes não autorizados.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">125</div><div class="score-bar-wrap"><div class="score-bar" style="width:100%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 12.0</div>
+              <div class="td-name">Exposição de Dados Pessoais a Não Autorizados</div>
+              <div class="td-desc">Falha em proteger dados pessoais contra acesso não autorizado ou sem consentimento.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">125</div><div class="score-bar-wrap"><div class="score-bar" style="width:100%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 13.0</div>
+              <div class="td-name">Bypass de Autorização por Chave do Usuário</div>
+              <div class="td-desc">Falha de autorização permite acesso indevido por manipulação de identificadores.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">125</div><div class="score-bar-wrap"><div class="score-bar" style="width:100%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 15.0</div>
+              <div class="td-name">Arquivos ou Diretórios Acessíveis a Terceiros</div>
+              <div class="td-desc">Arquivos ficam acessíveis a usuários não autorizados mesmo sem permissão adequada.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">125</div><div class="score-bar-wrap"><div class="score-bar" style="width:100%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 17.0</div>
+              <div class="td-name">Codificação Fraca para Senhas</div>
+              <div class="td-desc">Ocultar senha com codificação trivial não a protege contra ataques de força bruta.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">125</div><div class="score-bar-wrap"><div class="score-bar" style="width:100%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 18.0</div>
+              <div class="td-name">Erros de Gerenciamento de Chaves Criptográficas</div>
+              <div class="td-desc">Erros na gestão de chaves criptográficas comprometem toda a cadeia de segurança.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">125</div><div class="score-bar-wrap"><div class="score-bar" style="width:100%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 19.0</div>
+              <div class="td-name">Gerenciamento Incorreto de Usuários</div>
+              <div class="td-desc">O produto não gerencia adequadamente usuários dentro de seu ambiente.</div>
+            </td>
+            <td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td><td><span class="g-val g5">5</span></td>
+            <td><div class="score-val score-max">125</div><div class="score-bar-wrap"><div class="score-bar" style="width:100%;background:var(--danger)"></div></div></td>
+            <td><span class="prio-badge prio-max">Máxima</span></td>
+          </tr>
+
+          <!-- PRIORIDADE ALTA -->
+          <tr>
+            <td>
+              <div class="td-id">ID 5.0</div>
+              <div class="td-name">Gestão Inadequada de Situações Excepcionais</div>
+              <div class="td-desc">Falhas no tratamento de erros causam comportamentos imprevisíveis e vulnerabilidades.</div>
+            </td>
+            <td><span class="g-val g4">4</span></td><td><span class="g-val g3">3</span></td><td><span class="g-val g4">4</span></td>
+            <td><div class="score-val score-high">48</div><div class="score-bar-wrap"><div class="score-bar" style="width:38%;background:var(--warn)"></div></div></td>
+            <td><span class="prio-badge prio-high">Alta</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 7.0</div>
+              <div class="td-name">Mensagem de Erro com Informações Sensíveis</div>
+              <div class="td-desc">Mensagem de erro expõe informações confidenciais sobre o ambiente, usuários ou dados.</div>
+            </td>
+            <td><span class="g-val g4">4</span></td><td><span class="g-val g4">4</span></td><td><span class="g-val g4">4</span></td>
+            <td><div class="score-val score-high">64</div><div class="score-bar-wrap"><div class="score-bar" style="width:51%;background:var(--warn)"></div></div></td>
+            <td><span class="prio-badge prio-high">Alta</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 14.0</div>
+              <div class="td-name">Armazenamento Inseguro de Informações Sensíveis</div>
+              <div class="td-desc">Dados sensíveis armazenados sem limitar adequadamente o acesso de agentes não autorizados.</div>
+            </td>
+            <td><span class="g-val g3">3</span></td><td><span class="g-val g5">5</span></td><td><span class="g-val g2">2</span></td>
+            <td><div class="score-val score-high">30</div><div class="score-bar-wrap"><div class="score-bar" style="width:24%;background:var(--warn)"></div></div></td>
+            <td><span class="prio-badge prio-high">Alta</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 16.0</div>
+              <div class="td-name">Código de Depuração Ativo em Produção</div>
+              <div class="td-desc">O produto é lançado com código de depuração (debug) ainda habilitado ou ativo.</div>
+            </td>
+            <td><span class="g-val g4">4</span></td><td><span class="g-val g3">3</span></td><td><span class="g-val g4">4</span></td>
+            <td><div class="score-val score-high">48</div><div class="score-bar-wrap"><div class="score-bar" style="width:38%;background:var(--warn)"></div></div></td>
+            <td><span class="prio-badge prio-high">Alta</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="td-id">ID 20.0</div>
+              <div class="td-name">Registro Insuficiente de Eventos de Segurança</div>
+              <div class="td-desc">Eventos críticos não são registrados ou perdem detalhes importantes ao serem logados.</div>
+            </td>
+            <td><span class="g-val g4">4</span></td><td><span class="g-val g4">4</span></td><td><span class="g-val g4">4</span></td>
+            <td><div class="score-val score-high">64</div><div class="score-bar-wrap"><div class="score-bar" style="width:51%;background:var(--warn)"></div></div></td>
+            <td><span class="prio-badge prio-high">Alta</span></td>
+          </tr>
+
+          <!-- PRIORIDADE MÉDIA -->
+          <tr>
+            <td>
+              <div class="td-id">ID 9.0</div>
+              <div class="td-name">Declaração de Exceção Genérica</div>
+              <div class="td-desc">Declarar exceções genéricas dificulta o tratamento e recuperação adequados de erros.</div>
+            </td>
+            <td><span class="g-val g3">3</span></td><td><span class="g-val g2">2</span></td><td><span class="g-val g3">3</span></td>
+            <td><div class="score-val score-med">18</div><div class="score-bar-wrap"><div class="score-bar" style="width:14%;background:var(--accent3)"></div></div></td>
+            <td><span class="prio-badge prio-med">Média</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Criteria legend -->
+    <hr class="divider">
+    <div class="sub-label">▸ Critérios de Pontuação GUT</div>
+    <div class="criteria-grid">
+      <div class="criteria-card">
+        <div class="criteria-title" style="color:#f87171;">Gravidade (G)</div>
+        <div class="criteria-row"><span>5</span><span class="criteria-score g5">Extremamente grave</span></div>
+        <div class="criteria-row"><span>4</span><span class="criteria-score g4">Muito grave</span></div>
+        <div class="criteria-row"><span>3</span><span class="criteria-score g3">Grave</span></div>
+        <div class="criteria-row"><span>2</span><span class="criteria-score g2">Pouco grave</span></div>
+        <div class="criteria-row"><span>1</span><span class="criteria-score g1">Sem gravidade</span></div>
+      </div>
+      <div class="criteria-card">
+        <div class="criteria-title" style="color:var(--warn);">Urgência (U)</div>
+        <div class="criteria-row"><span>5</span><span class="criteria-score g5">Extremamente urgente</span></div>
+        <div class="criteria-row"><span>4</span><span class="criteria-score g4">Muito urgente</span></div>
+        <div class="criteria-row"><span>3</span><span class="criteria-score g3">Urgente</span></div>
+        <div class="criteria-row"><span>2</span><span class="criteria-score g2">Pouco urgente</span></div>
+        <div class="criteria-row"><span>1</span><span class="criteria-score g1">Sem urgência</span></div>
+      </div>
+      <div class="criteria-card">
+        <div class="criteria-title" style="color:var(--accent3);">Tendência (T)</div>
+        <div class="criteria-row"><span>5</span><span class="criteria-score g5">Piora rapidamente</span></div>
+        <div class="criteria-row"><span>4</span><span class="criteria-score g4">Piora em curto prazo</span></div>
+        <div class="criteria-row"><span>3</span><span class="criteria-score g3">Piora em médio prazo</span></div>
+        <div class="criteria-row"><span>2</span><span class="criteria-score g2">Piora em longo prazo</span></div>
+        <div class="criteria-row"><span>1</span><span class="criteria-score g1">Sem tendência de piora</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3.2 POLÍTICAS DE ACESSO + 3.3 LGPD -->
+  <div class="card card-warn">
+    <div class="tag tag-warn">3.2 Políticas de Acesso &amp; 3.3 Adequação LGPD</div>
+    <div class="two-col">
+      <div class="info-box">
+        <div class="info-box-title" style="color:#f87171;">// Políticas de Acesso</div>
+        <div class="info-row">
+          <strong>Autenticação</strong>
+          <span>Implementação de JWT (JSON Web Tokens) com expiração de 1 hora. Senhas armazenadas com bcrypt (hash + salt), nunca em texto plano.</span>
+        </div>
+        <div class="info-row">
+          <strong>Controle de Permissões (RBAC)</strong>
+          <span>Controle baseado em papéis: <em>Admin</em> tem acesso total ao sistema; <em>Analista</em> acessa apenas bases vinculadas ao seu contrato; <em>Viewer</em> tem acesso somente leitura.</span>
+        </div>
+        <div class="info-row">
+          <strong>Autenticação 2FA</strong>
+          <span>Duplo fator obrigatório para perfis Admin. Token TOTP via app autenticador (Google Authenticator / Authy).</span>
+        </div>
+        <div class="info-row">
+          <strong>Logs de Acesso</strong>
+          <span>Todos os acessos registrados com timestamp, IP e usuário. Retenção de 90 dias com alertas automáticos para acessos suspeitos.</span>
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="info-box-title" style="color:var(--accent3);">// Adequação LGPD</div>
+        <div class="info-row">
+          <strong>Dados Coletados</strong>
+          <span>Nome, CPF, E-mail, Histórico de acessos e Logs de operações nos bancos de dados dos clientes.</span>
+        </div>
+        <div class="info-row">
+          <strong>Base Legal</strong>
+          <span>"Execução de Contrato" (Art. 7º, V) para dados operacionais e "Consentimento" (Art. 7º, I) para envio de comunicações e relatórios.</span>
+        </div>
+        <div class="info-row">
+          <strong>Criptografia</strong>
+          <span>Todos os dados sensíveis criptografados com AES-256 em repouso e TLS 1.3 em trânsito.</span>
+        </div>
+        <div class="info-row">
+          <strong>Direito ao Esquecimento</strong>
+          <span>Portal do titular no painel com opção "Excluir Conta e Dados", executando <em>hard delete</em> após 30 dias de carência, conforme Art. 18, VI da LGPD.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytic -->
+    <div class="analytic">
+      <div class="analytic-head">⚠ Análise Crítica Exigida (Segurança)</div>
+      <p><strong>Justifique:</strong> Explique tecnicamente como a vulnerabilidade de maior score na Matriz GUT (Score 125 — Controle de Acesso Quebrado, ID 1.0) pode ser explorada no contexto específico da INFOTECH, que gerencia bancos de dados de múltiplos clientes. Quais medidas exatas de código ou infraestrutura — como RBAC, JWT e 2FA — mitigam esse risco e como elas se complementam para garantir que um cliente nunca acesse dados de outro?</p>
+    </div>
+  </div>
+
+
+
+  </div><!-- /section seguranca -->
+
+</div><!-- /shell -->
+
+<div class="site-footer">
+  <span>INFOTECH</span> &nbsp;·&nbsp; Projeto Integrador 2025 &nbsp;·&nbsp; Ciência da Computação + Sist. de Informação &nbsp;·&nbsp; Entrega: 18 de Maio
 </div>
+
+<script>
+  const links = document.querySelectorAll(".nav-link:not(.soon)");
+  const sections = document.querySelectorAll(".section-block");
+  window.addEventListener("scroll", () => {
+    let cur = "";
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+    links.forEach(l => {
+      l.classList.toggle("active", l.getAttribute("href") === "#" + cur);
+    });
+  });
+</script>
+
 </body>
 </html>
